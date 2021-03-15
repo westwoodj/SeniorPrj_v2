@@ -1,0 +1,154 @@
+A = {a1, a2, ..., an} is the set of n news pieces
+U = {u1, u2, ..., um} is the set of m users POSTING these pieces.
+
+
+X exists as RR^n*t is the bag-of-word feature matrix where t is the vocabulary size
+
+A exists as {0,1}^m*m denotes the user adjacency matrix
+Aij = 1 means users i and j are friends
+
+
+W exists as {0,1}m*n is the user-news interaction matrix
+Wij means that user ui has shared news piece aj
+
+#### The authors only focus on news interaction without comments, and these users share the same viewpoints as the pub.\
+#### basically this means just regular retweets are considered
+
+
+P = {p1, p2, ..., pl} is the set of l news publishers
+
+B exists as RR^l*n is the publisher-news publishing matrix
+Bkj = 1, means news publisher pk publishes news article aj
+
+##assumed that the publisher bias of some publishers are given (they are in media-bias-scrubbed.csv)
+
+o exists as {-1,0,1}^l*1 as the partisan label vectors where left-,neutral-,and right-biased are -1,0,1 respectively
+
+
+
+y = {y1,y2,....yn} exists as RR^n*1 to represent news labels
+
+yj = 1 means news piece aj is fake news, yj = -1 means it is true news.
+
+
+
+GIVEN: news article feature matrix (X), user adjacency matrix (A), user social engagement matrix (W), publisher-news
+publishing matrix (B), publisher partisan label vector o, and partial labeled news vector yL:
+
+PREDICT: unlabeled news label vector yU
+
+
+
+NEWS CONTENT EMBEDDING:
+
+Given X, find two nonnegative matrices D and V (latent feature matrix and vocabulary respectively).
+
+DL exists as (+)RR^r*d =  news latent feature matrix for labeled news
+DU exists as (+)RR^(n-r)*d = news latent feature matrix for unlabeled news
+
+r = the size of labeled news, d = the dimension of the latent space
+
+USER EMBEDDING:
+
+Given A {0,1}^m*m, we learn U as (+)RR^m*d from the optimization in (2) - HAVE THEM GO OVER THIS
+
+Y exists as RR^m*m, and controls the contribution of A, Yij = 1 if Aij == 1
+
+USER-NEWS INTERACTION EMBEDDING
+
+every user, ui, gets a credibility score ci, which exists in [0,1]
+
+c = {c1,c2,...cm} to denote the credibility vector of m users
+
+"Highly credible users are more likely to share credible news"
+
+    This implies a need for minimization between high-cred. users and true news:
+        min(U,DL >= 0) summation(i=1,m)summation(i=1,r) Wij*ci*(1- (1+yLj)/2) ||Ui-DLj||
+
+    (1 - (1+yLj)/2) ensures only true news pieces are included...
+
+
+"low credibility users are more likely to share fake news"
+
+    This implies a need for minimization between low-cred. users and fake news:
+        min(U,DL >= 0) summation(i=1,m)summation(i=1,r) Wij*(1-ci)*((1+yLj)/2) ||Ui-DLj||
+
+    (1+yLj)/2 includes only fake news
+
+
+These equations can be combined to form:
+
+min(U,DL >= 0) summation(i=1,m)summation(i=1,r)  Gij || Ui - DLj || (eq. 6)
+
+
+
+L = S - F is the LAPLACIAN MATRIX and S is a diagonal matrix with diagonal element Sii = summation(j=1,m+r) Fij
+
+where F exists as RR^(m+r)*(m+r)
+
+and is computed as follows:
+
+
+Fij = 0         when i, j exists as [1,m] oor i,j exist as [m+1,m+r]
+Fij = Gi(j-m)   when i exists as [1,m], j exists as [m+1, m+r]
+Fij = G(i-m)j,  when i exists as [m+1, m+r], j exists as [1,m]
+
+
+PUBLISHER-NEWS RELATION EMBEDDING
+
+since not all publishers will have a known bias, we introduce e exists as {0,1} ^l*1
+if we know the publisher bias of publisher pk, then ek = 1, else ek = 0\
+
+we utilize o and B to optimize news feature representation learning
+
+Bnot is the normalized user-news publishing relation matrix. ie Bnot kj = Bkj/(summation(j=1,n) Bkj)
+
+q exists as RR^d*1. it is the weighting matrix that maps news publishers' latent features to corresponding partisan label vector o
+
+
+
+
+ALGORITHM:
+
+Preprocess: X, A, B, W, Y, o, yL, alpha, beta, gamma, lambda, eta(learning rate)
+
+Ensure: yU
+1:  Randomly initialize U, V, T, D, p, q
+2:  Precompute Laplacian matrix L
+3:  repeat the following:
+        a. update D with equation 14
+        b. update U with equation 18
+        c. update V with equation 20
+        d. update T with equation 22
+        e. update p,q with equation 23
+        until convergence
+4:  Calculate yU = Sign(DUp)
+
+a. Update D
+    psiD = the Langrange multiplier for constraint D >= 0.
+
+    L = [L11; L12; L21; L22], where:
+    L11 exists as RR^m*m
+    L12 exists as RR^m*r
+    L21 exists as RR^r*m
+    L22 exists as RR^r*r
+
+    X = [XL, XU].
+
+    E is the diagonal matrix with {ek} k=1 to l on the diagonal
+
+    Dij new = Dij * sqrt(D hat(i,j) / D tilda(i,j))
+    ^ see equation 15 for D hat and D tilda
+
+
+Build L as Degree Matrix combined with Adjacency Matrix (-1 denotes connection in graph on Laplacian matrix)
+
+
+
+
+
+
+
+
+
+
