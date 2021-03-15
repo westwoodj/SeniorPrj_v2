@@ -27,7 +27,7 @@ def makeB(file):
     #test = ast.literal_eval(us[0])
     #print(test['id']) #{"follow_request_sent","profile_use_background_image","profile_text_color","default_profile_image","id","profile_background_image_url_https","verified","profile_location","profile_image_url_https","profile_sidebar_fill_color","entities","description","followers_count","profile_sidebar_border_color","id_str","profile_background_color","listed_count","is_translation_enabled","utc_offset","statuses_count","description","friends_count","location","profile_link_color","profile_image_url","following","geo_enabled","profile_banner_url","profile_background_image_url","name","lang","profile_background_tile","favourites_count","screen_name","notifications","url","created_at","contributors_enabled","time_zone","protected","default_profile","is_translator"}
     #print(us[0]['id'])
-    with open('data/publisher-news.csv', 'w', encoding="utf-8", newline='') as f:
+    with open('../PublishingEmbedding/publisher-news.csv', 'w', encoding="utf-8", newline='') as f:
         writer = csv.writer(f, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL, )
 
         for key in us:

@@ -45,6 +45,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\PublishingEmbedding\BMatMaker.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\PublishingEmbedding\Bmat.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\PublishingEmbedding\media-bias-scrubbed-results.csv">
           <value>
             <Attribute>
