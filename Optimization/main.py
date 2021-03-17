@@ -1,11 +1,19 @@
 # import numpy as np
 # import scipy
-# import sklearn
 # import pandas as pd
 # import pickle
 # import os
+from sklearn.metrics import classification_report
 from decimal import *
 from Optimization.parameters import *
+import sys
+import warnings
+import time
+
+if not sys.warnoptions:
+    warnings.simplefilter("ignore")
+
+#from Optimization.fakeparams import *
 
 getcontext().prec=20
 def gij(ran):
@@ -17,22 +25,16 @@ def gij(ran):
 
 
 def compute_L():
-    # TODO sth is wrong with EQ. 8, yL len shoud be no more than r < m
-    """
-    L = S - F as in eq. 8
-    """
-    # F_top_left [m, m]
-    # F_bottom_right [r, r]
-    # F_top_right [m,r]
-    # F_bottom_left [r,m]
+
     G = gij(m+r)
+
     # compute F
     for i in range(m+r):
         for j in range(m+r):
             if 1 <= i+1 <= m and m+1 <= j+1 <= m+r:
                 F[i, j] = G[i, j-m]
             if m+1 <= i+1 <= m+r and 1 <= j+1 <= m:
-                F[i, j] = G[i-m, j]  # sth is wrong
+                F[i, j] = G[i-m, j]
 
     # compute S
     for i in range(m+r):
@@ -43,10 +45,12 @@ def compute_L():
 
 
 def update_D():
-    print("updating D")
+    #print("updating D")
     def pos(x):
+        #print("pos: \n", x)
         return (np.abs(x) + x) * 0.5
     def neg(x):
+        #print("neg: \n", x)
         return (np.abs(x) - x) * 0.5
     #print(B_bar.shape)
     #print(T.shape)
@@ -79,7 +83,9 @@ def update_D():
               gamma*neg(B_bar.T.dot(E.T).dot(E).dot(o).dot(q.T)) + \
               np.pad(D_tilde_1, ((D.shape[0] - D_tilde_1.shape[0],0), (0, 0))
                      )
-    return D*np.sqrt(D_caret/D_tilde)
+    divres = np.sqrt((D_caret/D_tilde))
+    #print(divres, sum(divres))
+    return D*np.sqrt(divres)
 
 def update_U():
     def pos(x):
@@ -103,17 +109,18 @@ def update_U():
     Fut = np.dot(Eut, T)
 
     U_tilde = Dut + Fut + lmbda*U + beta*pos(L11.dot(U)) + beta*pos(L12.dot(DL))
-    print(np.isfinite(U_caret).all(), np.isfinite(U_tilde).all())
-    print(np.isfinite(U).all())
+    #print(np.isfinite(U_caret).all(), np.isfinite(U_tilde).all())
+    #print(np.isfinite(U).all())
    # print((U_caret >= 0).all(), (U_tilde >= 0).all())
-    step = np.sqrt(U_caret/U_tilde)
+    '''step = np.sqrt(U_caret/U_tilde)
     if np.isnan(step).any():
         print("nan error!")
         badItems = np.where(np.isnan(step))
         print("bad inputs at: "+str(badItems))
         print("bad  input values: (caret, tilde) ", str(U_caret[np.isnan(step)]), str(U_tilde[np.isnan(step)]))
-        raise Exception("unexpected nan value in sqrt step!!")
-    return U*np.sqrt((U_caret/U_tilde))
+        raise Exception("unexpected nan value in sqrt step!!")'''
+    divres = np.divide(U_caret, U_tilde, out=np.zeros_like(U_caret), where=U_tilde!=0)
+    return U*np.sqrt((divres))
 
 def update_V():
     return V * np.sqrt(X.T.dot(D)/(V.dot(D.T).dot(D) + lmbda * V))
@@ -128,10 +135,13 @@ def update_q():
     return (eta / (eta * D.T.dot(B_bar.T).dot(E).dot(B_bar).dot(D) + lmbda * I)).dot(D.T).dot(B_bar.T).dot(E).dot(o)
 
 def compute_yU():
-    return np.sign(DU.dot(p))
+    #print(DU.dot(p))
+    #print(sum(DU.dot(p)))
+    return np.sign(DU.dot(p))#, out=np.zeros_like(DU.dot(p)), where=abs(DU.dot(p))<1)
 
 L[:,:] = compute_L()
 steps = 1000
+start = time.time()
 for _ in range(steps):
 
     D[:,:] = update_D()
@@ -141,8 +151,14 @@ for _ in range(steps):
     p[:,:] = update_p()
     q[:,:] = update_q()
     if _ % 10 == 0:
-        print(_)
+        end = time.time()
+        print(_, "time: ", str((end-start)/60.0))
         yU_pred = compute_yU()
-        print("predicted yU:\n", yU_pred)
+        start = time.time()
+        report = classification_report(y_true=[[0], [-1], [-1], [0], [0], [0], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1]], y_pred=yU_pred)
+        print("predicted yU:\n", np.reshape(yU_pred, newshape=(len(yU),)))
+        print(report)
 yU_pred = compute_yU()
+print(classification_report(y_true=[[0], [-1], [-1], [0], [0], [0], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1]], y_pred=yU_pred))
+
 print(yU_pred)

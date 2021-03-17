@@ -4,6 +4,8 @@
 # import pandas as pd
 # import pickle
 # import os
+from sklearn.metrics import classification_report
+
 from parameters import *
 
 def compute_L():
@@ -44,11 +46,12 @@ def update_D():
     #print("q: ", q.shape)
     D_caret_1 = B_bar.T.dot(E.T).dot(E).dot(o).dot(q.T)
     #print("D caret 1: ", D_caret_1.shape)
-
+    '''
     print("p.T: ", p.T.shape)
     print("DL: ", DL.shape)
     print("p: ", p.shape)
     print("Bcd2: ", neg(DL.dot(p).dot(p.T)).shape)
+    '''
     D_caret_2 = yita * neg(DL.dot(p).dot(p.T)) + yita * pos(yL.dot(p.T)) + beta * neg(L21.dot(U)) + beta * neg(L22.dot(DL))
 
     D_caret = X.dot(V) + \
@@ -99,9 +102,15 @@ for _ in range(steps):
     T[:,:] = update_T()
     p[:,:] = update_p()
     q[:,:] = update_q()
-    #if _ % 10 == 0: print(_)
+    if _ % 10 == 0:
+        print(_)
+        yU_pred = compute_yU()
+        report = classification_report(y_true=yU, y_pred=yU_pred)
+        print("predicted yU:\n", yU_pred)
+        print(report)
 
 yU_pred = compute_yU()
+print(classification_report(y_true=yU, y_pred=yU_pred))
 #print(yU_pred)
 
 

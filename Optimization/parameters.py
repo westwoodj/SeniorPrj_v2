@@ -1,12 +1,21 @@
 import numpy as np
 import csv
+from sklearn.model_selection import train_test_split
+
 
 d = 10  # num features
 
-# buzzfeed
-alpha, beta, gamma, lmbda, eta = 1e-4, 1e-5, 1, 0.1, 1 #lmbda because lambda functions in Python
+#
+alpha, beta, gamma, lmbda, eta = 1e-5, 1e-4, 10, 0.1, 1 #lmbda because lambda functions in Python
 
+'''
+alpha and beta control social relationship and user-news engagements
 
+gamma controls publisher-partisian contribution
+
+eta controls the input of the linear classifier
+
+'''
 
 n, t = 74, 52 # news, terms
 m = 19867 #numer of users
@@ -34,9 +43,10 @@ y = np.load(r'C:\Users\minim\PycharmProjects\SeniorPrj\results\y.npy')
 
 o = np.load(r'C:\Users\minim\PycharmProjects\SeniorPrj\results\o.npy')
 #print(o.shape, o)
+o = o - o.mean()
+o = o / 35
 o = np.reshape(o, newshape=(l,1))
 #print(o.shape, o)
-
 e = np.load(r'C:\Users\minim\PycharmProjects\SeniorPrj\results\e.npy')
 c = np.random.uniform(0, 1, [m, 1])  # credibility score
 e = np.reshape(e, newshape=(l, 1))
@@ -46,7 +56,7 @@ e = np.reshape(e, newshape=(l, 1))
 #get yL
 y = np.reshape(y, newshape=(n, 1))
 #print(y.shape, y)
-
+#yL, yU = train_test_split(y, test_size=0.2, random_state=42)
 yL = y[:r, :]  # labeled
 yU = y[r:, :]  # unlabeled
 #print(yL.shape, yL)

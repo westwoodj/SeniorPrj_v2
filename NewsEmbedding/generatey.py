@@ -46,6 +46,7 @@ def readDB(database):
                 #print(dict.keys())
                 f.close()
     np.save(r'C:\Users\minim\PycharmProjects\SeniorPrj\results\y.npy', y)
+    np.savetxt(r'C:\Users\minim\PycharmProjects\SeniorPrj\results\y.csv', y, delimiter=' ', newline='\n', fmt='%i')
     #f = open(path, "r")
 
     #f.close()
