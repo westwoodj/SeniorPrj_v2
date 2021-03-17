@@ -3,7 +3,49 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="C:\Users\minim\OneDrive\Desktop\bzz\BuzzFeed_fake_news_content.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="C:\Users\minim\OneDrive\Desktop\bzz\BuzzFeed_real_news_content.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="C:\Users\minim\OneDrive\Desktop\bzz\PolitiFact_fake_news_content.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="C:\Users\minim\OneDrive\Desktop\bzz\PolitiFact_real_news_content.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="C:\Users\minim\OneDrive\Desktop\media-bias-scrubbed-results.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\InteractionEmbedding\Wmat.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\InteractionEmbedding\generate-user-news.py">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -17,6 +59,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\InteractionEmbedding\makeW.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\InteractionEmbedding\news.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\InteractionEmbedding\retweets.csv">
           <value>
             <Attribute>
@@ -24,7 +80,35 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\InteractionEmbedding\user-news.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\InteractionEmbedding\users.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\NewsEmbedding\data\X.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\NewsEmbedding\data\publisher-news.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\NewsEmbedding\file reader.py">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -59,7 +143,35 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\PublishingEmbedding\generatec.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\PublishingEmbedding\generateo.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\PublishingEmbedding\media-bias-scrubbed-results.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\PublishingEmbedding\o.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\PublishingEmbedding\publisher-news.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

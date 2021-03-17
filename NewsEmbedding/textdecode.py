@@ -6,6 +6,7 @@ import json
 import ast
 import re
 
+
 def makeCorpus(file):
     df = pd.read_csv(file)
     # windows-1252 encoding

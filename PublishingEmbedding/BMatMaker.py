@@ -10,24 +10,32 @@ def makeRealB(file):
     P = df["publisher"].to_numpy()
     A = df['news'].to_numpy()
     pubs, arts = [], []
+    pind, aind = [], []
     #print(df.iloc[0][1])
     for i in range(len(P)):
         if P[i] not in pubs:
             pubs.append(P[i])
+            pind.append(i)
         if A[i] not in arts:
             arts.append(A[i])
+            aind.append(i)
         #print(pubs, arts)
     #B = [[x[:]]][]
-    B = [x[:] for x in [[0] * len(pubs)] * len(arts)]
+    l = len(pubs)
+    n = len(arts)
+    print(l)
+    B = np.zeros((l, n), dtype=np.longdouble)
     print(len(B), len(B[0]))
-    for i in range(len(arts)):
-        for j in range(len(pubs)):
+    for i in range(l):
+        for j in range(n):
+            #print(j, df.iloc[i][1], arts[j])
+            if df.iloc[pind[i], 0] == df.iloc[aind[j], 0]:
+                #print("match!!!! at ", str(i), " ", str(j))
+                B[i, j] = 1
+    np.save('C:\\Users\\minim\\PycharmProjects\\SeniorPrj\\results\\B.npy', B)
 
-            if df.iloc[j][1] == arts[i]:
-                B[i][j] = 1
-            else:
-                B[i][j] = 0
-    print(B)
+
+    #print(B)
     with open('../PublishingEmbedding/Bmat.csv', 'w', encoding="utf-8", newline='\n') as f:
         writer = csv.writer(f, delimiter=' ', quotechar='|', quoting=csv.QUOTE_MINIMAL, )
         writer.writerows(B)

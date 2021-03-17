@@ -44,3 +44,7 @@ for k in index:
     for w in np.argsort(W[:,k])[::-1][:n_topKeyword]:
         print(vocab[w], end=' ')
     print()
+
+
+
+

@@ -8,17 +8,17 @@ def convert_annotations(annotation, string = True):
             if string:
                 label = "unverified"
             else:
-                label = 2
+                label = 0
         elif int(annotation['misinformation'])==0 and int(annotation['true'])==1 :
             if string:
                 label = "true"
             else:
-                label = 1
+                label = -1
         elif int(annotation['misinformation'])==1 and int(annotation['true'])==0 :
             if string:
                 label = "false"
             else:
-                label = 0
+                label = 1
         elif int(annotation['misinformation'])==1 and int(annotation['true'])==1:
             print ("OMG! They both are 1!")
             print(annotation['misinformation'])
@@ -31,18 +31,18 @@ def convert_annotations(annotation, string = True):
             if string:
                 label = "unverified"
             else:
-                label = 2
+                label = 0
         elif int(annotation['misinformation'])==1:
             if string:
                 label = "false"
             else:
-                label = 0
+                label = 1
                 
     elif 'true' in annotation.keys() and 'misinformation' not in annotation.keys():
         print ('Has true not misinformation')
-        label = None
+        label = 0
     else:
         print('No annotations')
-        label = None
+        label = 0
            
     return label
