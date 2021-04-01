@@ -33,6 +33,8 @@ def readDB(database):
                 f = open(fpath, "r")
                 dict = json.load(f)
                 label = convert_annotations(dict, string=False)
+                if label == 0:
+                    label = 1
                 y[i] = label
                 i += 1
                 #dict['text'] = dict['text'].translate(str.maketrans('','', string.punctuation))

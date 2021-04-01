@@ -158,6 +158,10 @@ for _ in range(steps):
         report = classification_report(y_true=[[0], [-1], [-1], [0], [0], [0], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1]], y_pred=yU_pred)
         print("predicted yU:\n", np.reshape(yU_pred, newshape=(len(yU),)))
         print(report)
+
+        #np.savetxt()
+
+
 yU_pred = compute_yU()
 print(classification_report(y_true=[[0], [-1], [-1], [0], [0], [0], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1], [-1]], y_pred=yU_pred))
 

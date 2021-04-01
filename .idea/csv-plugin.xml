@@ -129,6 +129,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Optimization\parameters.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Optimization\scikitmixin.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\PublishingEmbedding\BMatMaker.py">
           <value>
             <Attribute>
@@ -186,6 +200,13 @@
           </value>
         </entry>
         <entry key="\param.txt">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\readAllPHEME.py">
           <value>
             <Attribute>
               <option name="separator" value="," />

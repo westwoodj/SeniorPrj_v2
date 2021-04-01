@@ -12,7 +12,14 @@ from urllib.parse import urlparse
 #np.save(r'C:\Users\学汪\Desktop\summner research\kaggle_data\X.npy',X_news)
 
 
+def class_value(classV):
 
+    if classV > 5:
+        return 1
+    elif classV < -5:
+        return -1
+    else:
+        return 0
 
 #url ex. is str '
 def getBias(uurl, name, df):
@@ -103,7 +110,7 @@ def readLinks(database):
                     pubid = dict['user']['id']
                     if url != 'None':
                         bias, eVal = getBias(url, name, biasData)
-
+                        bias = class_value(bias)
                     else:
                         bias = 0
                         eVal = 0
